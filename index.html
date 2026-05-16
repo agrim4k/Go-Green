@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoPulse | Next-Gen Sustainability</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="preloader" id="preloader">
+        <div class="loader-ring"></div>
+        <span class="loader-text">Initializing EcoPulse...</span>
+    </div>
+
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-leaf"></i> ECO<span>PULSE</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home" class="hover-target">Home</a></li>
+            <li><a href="#mission" class="hover-target">Initiatives</a></li>
+            <li><a href="#calculator" class="hover-target">Carbon Model</a></li>
+            <li><a href="#Focus" class="hover-target">Focus</a></li>
+            <li><a href="#stats" class="hover-target">Stats</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button id="theme-toggle" class="hover-target" aria-label="Toggle Theme">
+                <i class="fa-solid fa-sun"></i>
+            </button>
+            <a href="#join" class="btn-primary hover-target">Deploy Action</a>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content" data-speed="0.5">
+                <div class="badge">Version 2.0.4 | Global Impact Live</div>
+                <h1 class="glitch-text" data-text="Rewriting the Future.">Rewriting the Future.</h1>
+                <p class="hero-description">
+                    We are engineering a sustainable timeline. Join the world's most advanced network of eco-innovators
+                    deploying clean energy and predictive conservation models.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn-primary hover-target btn-glow"id="initiateProjectBtn">Initialize Project</button>
+                    <button class="btn-secondary hover-target" id="viewDataBtn"><i class="fa-solid fa-play"></i> View Data</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="glass-panel floating">
+                    <div class="panel-header">Live Earth Metrics</div>
+                    <div class="panel-body">
+                        <div class="metric"><span class="label">Co2 Offset</span><span class="value dynamic-counter" data-target="849302">0</span>T</div>
+                        <div class="metric"><span class="label">Grid Power</span><span class="value text-green">84% Renew</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mission" class="features-section">
+            <div class="section-header">
+                <h2>Core <span>Protocols</span></h2>
+                <p>Deploying cutting-edge solutions across three main verticals.</p>
+            </div>
+            <div class="cards-wrapper">
+                <div class="feature-card hover-target">
+                    <div class="card-icon"><i class="fa-solid fa-solar-panel"></i></div>
+                    <h3>Energy Grid Override</h3>
+                    <p>Transitioning urban infrastructures to decentralized, AI-optimized solar microgrids.</p>
+                    <div class="card-progress"><div class="progress-fill" style="width: 65%;"></div></div>
+                </div>
+                <div class="feature-card hover-target">
+                    <div class="card-icon"><i class="fa-solid fa-droplet"></i></div>
+                    <h3>Hydration Matrices</h3>
+                    <p>Automated drone fleets actively removing micro-plastics from oceanic garbage patches.</p>
+                    <div class="card-progress"><div class="progress-fill" style="width: 42%;"></div></div>
+                </div>
+                <div class="feature-card hover-target">
+                    <div class="card-icon"><i class="fa-solid fa-microchip"></i></div>
+                    <h3>Predictive Forestry</h3>
+                    <p>Machine-learning models identifying optimal soil conditions for rapid reforestation.</p>
+                    <div class="card-progress"><div class="progress-fill" style="width: 89%;"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="calculator" class="interactive-section">
+            <div class="calculator-container glass-morphism">
+                <div class="calc-info">
+                    <h2>Personal Impact <span>Model</span></h2>
+                    <p>Input your weekly metrics to generate a predictive carbon footprint analysis.</p>
+                </div>
+                <div class="calc-form">
+                    <div class="input-group">
+                        <label>Weekly Driving (Miles)</label>
+                        <input type="range" id="drive-input" min="0" max="500" value="100" class="slider hover-target">
+                        <span id="drive-val" class="slider-val">100</span>
+                    </div>
+                    <div class="input-group">
+                        <label>Meat Consumption (Meals/Week)</label>
+                        <input type="range" id="meat-input" min="0" max="21" value="5" class="slider hover-target">
+                        <span id="meat-val" class="slider-val">5</span>
+                    </div>
+                    <div class="result-display">
+                        <h3>Projected Annual Footprint:</h3>
+                        <div class="result-number"><span id="total-carbon">4.2</span> Tons</div>
+                        <p id="calc-feedback" class="feedback-text text-green">Optimal. You are below the global average.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+          <!-- Focus Cards -->
+<section id="Focus">
+  <div class="cards">
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/2917/2917990.png">
+      <h3>Clean Air</h3>
+      <p>Reduce pollution and protect lungs.</p>
+    </div>
+
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/4149/4149641.png">
+      <h3>Pure Water</h3>
+      <p>Safe water for every life.</p>
+    </div>
+
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+      <h3>Wildlife</h3>
+      <p>Protect nature’s beauty.</p>
+    </div>
+
+    
+</section>
+         <!-- Stats -->
+         <section id="stats">
+         <div class="stat">
+    <h3 id="trees">15000</h3>
+    <p>Trees Planted</p>
+    </div>
+
+  <div class="stat">
+    <h3 id="water">98000</h3>
+    <p>Liters Water Saved</p>
+  </div>
+
+  <div class="stat">
+    <h3 id="carbon">5000</h3>
+    <p>CO₂ Reduced (kg)</p>
+  </div>
+</section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>ECO<span>PULSE</span></h3>
+                <p>Code that cares for the planet.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Architecture</h4>
+                <a href="#">Documentation</a>
+                <a href="#">API Access</a>
+                <a href="#">Open Source</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 EcoPulse Systems. Built with precision.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+<style>
+    :root {
+    /* Color Palette - Dark Theme Default */
+    --bg-base: #0a0a0c;
+    --bg-surface: #121418;
+    --text-primary: #ffffff;
+    --text-secondary: #8b92a5;
+    --accent-primary: #00ff88;
+    --accent-glow: rgba(0, 255, 136, 0.3);
+    --border-color: rgba(255, 255, 255, 0.05);
+    
+    /* Typography */
+    --font-display: 'Clash Display', sans-serif;
+    --font-body: 'Satoshi', sans-serif;
+    
+    /* Layout */
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --glass-bg: rgba(18, 20, 24, 0.6);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] {
+    --bg-base: #f4f6f8;
+    --bg-surface: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --accent-primary: #059669;
+    --accent-glow: rgba(5, 150, 105, 0.2);
+    --border-color: rgba(0, 0, 0, 0.1);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: none; } /* Hide default cursor */
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Custom Cursor */
+.cursor-dot {
+    width: 8px; height: 8px; background: var(--accent-primary);
+    position: fixed; border-radius: 50%; pointer-events: none;
+    z-index: 9999; transform: translate(-50%, -50%);
+}
+
+.cursor-outline {
+    width: 40px; height: 40px; border: 1px solid var(--accent-primary);
+    position: fixed; border-radius: 50%; pointer-events: none;
+    z-index: 9998; transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+/* Preloader */
+.preloader {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: var(--bg-base); z-index: 10000;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    transition: opacity 0.8s ease;
+}
+
+.loader-ring {
+    width: 60px; height: 60px; border: 3px solid var(--border-color);
+    border-top-color: var(--accent-primary); border-radius: 50%;
+    animation: spin 1s linear infinite; margin-bottom: 20px;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* Ambient Background */
+.ambient-orb {
+    position: fixed; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.5;
+}
+.orb-1 { width: 40vw; height: 40vw; background: var(--accent-glow); top: -10%; left: -10%; }
+.orb-2 { width: 30vw; height: 30vw; background: rgba(0, 150, 255, 0.1); bottom: 10%; right: -5%; }
+
+/* Typography */
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
+span { color: var(--accent-primary); }
+
+/* Navbar */
+.navbar {
+    position: fixed; top: 0; width: 100%; padding: 1.5rem 5%;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--glass-bg); backdrop-filter: blur(16px);
+    border-bottom: var(--glass-border); z-index: 100;
+    transition: var(--transition-smooth);
+}
+
+.navbar.scrolled { padding: 1rem 5%; }
+
+.logo { font-size: 1.5rem; font-family: var(--font-display); font-weight: 700; letter-spacing: 1px;}
+.nav-links { display: flex; gap: 3rem; list-style: none; }
+.nav-links a { color: var(--text-primary); text-decoration: none; font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;}
+.nav-actions { display: flex; gap: 1.5rem; align-items: center; }
+
+#theme-toggle { background: none; border: none; color: var(--text-primary); font-size: 1.2rem; }
+
+/* Buttons */
+.btn-primary {
+    background: var(--accent-primary); color: #000; padding: 0.8rem 2rem;
+    border: none; border-radius: 4px; font-weight: 600; font-family: var(--font-body);
+    transition: var(--transition-smooth);
+}
+.btn-glow { box-shadow: 0 0 20px var(--accent-glow); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px var(--accent-glow); }
+
+.btn-secondary {
+    background: transparent; color: var(--text-primary); padding: 0.8rem 2rem;
+    border: 1px solid var(--border-color); border-radius: 4px; transition: var(--transition-smooth);
+}
+.btn-secondary:hover { background: var(--border-color); }
+
+/* Hero Section */
+.hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 0 5%; gap: 4rem; position: relative;
+}
+
+.hero-content h1 { font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1.1; margin: 1.5rem 0; }
+.hero-description { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6; max-width: 500px; margin-bottom: 2.5rem; }
+.badge { display: inline-block; padding: 0.4rem 1rem; border: 1px solid var(--accent-primary); color: var(--accent-primary); border-radius: 50px; font-size: 0.8rem; letter-spacing: 1px;}
+
+/* Glass Panel / Dashboard Element */
+.glass-panel {
+    background: var(--glass-bg); backdrop-filter: blur(20px);
+    border: var(--glass-border); border-radius: 16px; padding: 2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+.floating { animation: float 6s ease-in-out infinite; }
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+.metric { display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border-color); }
+.metric .value { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; }
+.text-green { color: var(--accent-primary); }
+
+/* Features Grid */
+.features-section { padding: 10rem 5%; }
+.section-header { text-align: center; margin-bottom: 5rem; }
+.section-header h2 { font-size: 3rem; }
+.section-header p { color: var(--text-secondary); margin-top: 1rem; }
+
+.cards-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+
+.feature-card {
+    background: var(--bg-surface); border: 1px solid var(--border-color);
+    padding: 3rem 2rem; border-radius: 12px; transition: var(--transition-smooth);
+    position: relative; overflow: hidden;
+}
+.feature-card:hover { transform: translateY(-10px); border-color: var(--accent-primary); }
+.card-icon { font-size: 2.5rem; color: var(--accent-primary); margin-bottom: 1.5rem; }
+.feature-card h3 { margin-bottom: 1rem; font-size: 1.4rem; }
+.feature-card p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; margin-bottom: 2rem; }
+
+.card-progress { height: 4px; background: var(--border-color); border-radius: 2px; width: 100%; }
+.progress-fill { height: 100%; background: var(--accent-primary); border-radius: 2px; }
+
+/* Interactive Calculator */
+.interactive-section { padding: 5rem 5%; display: flex; justify-content: center; }
+.calculator-container {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    background: var(--bg-surface); padding: 4rem; border-radius: 24px;
+    border: 1px solid var(--border-color); width: 100%; max-width: 1200px;
+}
+/* Glass Cards */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:rgba(255,255,255,0.07);
+    backdrop-filter:blur(12px);
+    padding:30px;
+    border-radius:25px;
+    text-align:center;
+    transition:.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    top:-50%;
+    left:-50%;
+    width:200%;
+    height:200%;
+    background:linear-gradient(45deg,transparent,#00ff99,transparent);
+    transform:rotate(45deg);
+    opacity:0;
+    transition:.5s;
+}
+
+.card:hover::before{opacity:.4;}
+.card:hover{
+    transform:translateY(-15px) scale(1.05);
+    box-shadow:0 0 35px rgba(0,255,153,.5);
+}
+
+.card img{
+    width:70px;
+    margin-bottom:20px;
+}
+
+/* Stats */
+.stats{
+    display:flex;
+    justify-content:space-around;
+    flex-wrap:wrap;
+    background:#06110c;
+}
+
+.stat{
+    text-align:center;
+    margin:30px;
+}
+
+.stat h3{
+    font-size:3.5rem;
+    color:#00ff99;
+    text-shadow:0 0 15px rgba(0,255,153,.7);
+}
+
+.input-group { margin-bottom: 2rem; }
+.input-group label { display: block; margin-bottom: 1rem; font-weight: 500; }
+.slider {
+    width: 100%; -webkit-appearance: none; height: 6px; border-radius: 3px;
+    background: var(--border-color); outline: none;
+}
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%;
+    background: var(--accent-primary);
+}
+.slider-val { float: right; margin-top: 0.5rem; font-family: var(--font-display); font-weight: 600; color: var(--accent-primary); }
+
+.result-display { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }
+.result-number { font-size: 4rem; font-family: var(--font-display); font-weight: 700; color: var(--text-primary); margin: 1rem 0; }
+.feedback-text { font-size: 1.1rem; }
+
+/* Footer */
+footer { padding: 5rem 5% 2rem; background: var(--bg-surface); border-top: 1px solid var(--border-color); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+.footer-links a { display: block; color: var(--text-secondary); text-decoration: none; margin-bottom: 0.8rem; }
+.footer-links a:hover { color: var(--accent-primary); }
+.footer-bottom { text-align: center; color: var(--text-secondary); font-size: 0.9rem; }
+
+/* Responsive Media Queries */
+@media (max-width: 968px) {
+    .hero, .calculator-container { grid-template-columns: 1fr; }
+    .nav-links { display: none; } /* Would add hamburger logic in JS for mobile */
+    .hero-content { text-align: center; margin-top: 6rem;}
+    .hero-description { margin: 1.5rem auto; }
+}
+</style>
+<script>
+    /**
+ * EcoPulse Frontend Application Architecture
+ * Modular, performance-optimized Vanilla JS
+ */
+
+const App = {
+    // Application State
+    state: {
+        theme: 'dark',
+        calculator: { drive: 100, meat: 5 }
+    },
+
+    // Initialization
+    init() {
+        this.cacheDOM();
+        this.bindEvents();
+        this.initPreloader();
+        this.initCursor();
+        this.initObserver();
+        this.calculateFootprint(); // Initial calculation
+    },
+
+    cacheDOM() {
+        this.body = document.body;
+        this.html = document.documentElement;
+        this.preloader = document.getElementById('preloader');
+        this.cursorDot = document.querySelector('.cursor-dot');
+        this.cursorOutline = document.querySelector('.cursor-outline');
+        this.hoverTargets = document.querySelectorAll('.hover-target');
+        this.themeBtn = document.getElementById('theme-toggle');
+        this.navbar = document.getElementById('navbar');
+        
+        // Calculator DOM
+        this.driveInput = document.getElementById('drive-input');
+        this.meatInput = document.getElementById('meat-input');
+        this.driveVal = document.getElementById('drive-val');
+        this.meatVal = document.getElementById('meat-val');
+        this.totalOutput = document.getElementById('total-carbon');
+        this.feedbackText = document.getElementById('calc-feedback');
+        
+        // Counters
+        this.counters = document.querySelectorAll('.dynamic-counter');
+    },
+
+    bindEvents() {
+        // Theme Toggle
+        this.themeBtn.addEventListener('click', () => this.toggleTheme());
+
+        // Scroll Events (Throttled via requestAnimationFrame)
+        window.addEventListener('scroll', () => {
+            window.requestAnimationFrame(() => this.handleScroll());
+        });
+
+        // Calculator Inputs
+        this.driveInput.addEventListener('input', (e) => this.updateCalcState('drive', e.target.value));
+        this.meatInput.addEventListener('input', (e) => this.updateCalcState('meat', e.target.value));
+    },
+
+    // --- Core Features ---
+
+    initPreloader() {
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                this.preloader.style.opacity = '0';
+                setTimeout(() => this.preloader.remove(), 800);
+            }, 1000); // Simulated artificial load time for visual effect
+        });
+    },
+
+    initCursor() {
+        // High-performance custom cursor tracking
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Direct DOM manipulation for zero-latency dot
+            this.cursorDot.style.left = `${posX}px`;
+            this.cursorDot.style.top = `${posY}px`;
+
+            // Slight lag for outline (smooth follow)
+            this.cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 150, fill: "forwards" });
+        });
+
+        // Hover effects
+        this.hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => {
+                this.cursorOutline.style.width = '60px';
+                this.cursorOutline.style.height = '60px';
+                this.cursorOutline.style.backgroundColor = 'rgba(0, 255, 136, 0.1)';
+            });
+            target.addEventListener('mouseleave', () => {
+                this.cursorOutline.style.width = '40px';
+                this.cursorOutline.style.height = '40px';
+                this.cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+    },
+
+    handleScroll() {
+        // Navbar glass effect trigger
+        if (window.scrollY > 50) {
+            this.navbar.classList.add('scrolled');
+        } else {
+            this.navbar.classList.remove('scrolled');
+        }
+
+        // Simple Parallax for hero content
+        const heroContent = document.querySelector('.hero-content');
+        if(heroContent) {
+            const scrollPos = window.scrollY;
+            heroContent.style.transform = `translateY(${scrollPos * 0.2}px)`;
+            heroContent.style.opacity = 1 - (scrollPos * 0.003);
+        }
+    },
+
+    toggleTheme() {
+        this.state.theme = this.state.theme === 'dark' ? 'light' : 'dark';
+        this.html.setAttribute('data-theme', this.state.theme);
+        
+        // Swap Icon
+        const icon = this.themeBtn.querySelector('i');
+        if(this.state.theme === 'light') {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        } else {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    },
+
+    // --- Logic Models ---
+
+    updateCalcState(type, value) {
+        this.state.calculator[type] = parseInt(value);
+        
+        // Update UI DOM immediately
+        if(type === 'drive') this.driveVal.innerText = value;
+        if(type === 'meat') this.meatVal.innerText = value;
+
+        this.calculateFootprint();
+    },
+
+    calculateFootprint() {
+        // Simple Predictive Algorithm
+        const { drive, meat } = this.state.calculator;
+        
+        // Base constants (dummy data for structural example)
+        const driveFactor = 0.02; 
+        const meatFactor = 0.15;
+        const baseCarbon = 2.5;
+
+        let total = baseCarbon + (drive * driveFactor) + (meat * meatFactor);
+        let formattedTotal = total.toFixed(1);
+
+        // Animate the number change
+        this.animateValue(this.totalOutput, parseFloat(this.totalOutput.innerText), formattedTotal, 300);
+
+        // Update feedback
+        if (total < 5.0) {
+            this.feedbackText.innerText = "Optimal. You are operating below the global average.";
+            this.feedbackText.style.color = "var(--accent-primary)";
+        } else if (total < 8.0) {
+            this.feedbackText.innerText = "Moderate. Consider optimization strategies.";
+            this.feedbackText.style.color = "#f59e0b"; // Warning yellow
+        } else {
+            this.feedbackText.innerText = "Critical. Carbon output exceeds sustainable limits.";
+            this.feedbackText.style.color = "#ef4444"; // Danger red
+        }
+    },
+
+    // Utilities
+    animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = (progress * (end - start) + start).toFixed(1);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    },
+
+    initObserver() {
+        // Intersection Observer for performance-friendly animations
+        const options = { root: null, threshold: 0.1, rootMargin: "0px" };
+        
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if(entry.target.classList.contains('dynamic-counter')) {
+                        const targetVal = parseInt(entry.target.getAttribute('data-target'));
+                        this.animateValue(entry.target, 0, targetVal, 2000);
+                        obs.unobserve(entry.target);
+                    }
+                }
+            });
+        }, options);
+
+        this.counters.forEach(counter => observer.observe(counter));
+    }
+};
+
+// Boot the application
+document.addEventListener('DOMContentLoaded', () => App.init());
+
+// Select the link using its classes
+const deployBtn = document.querySelector('.btn-primary.hover-target');
+
+deployBtn.addEventListener('click', function(event) {
+    // 1. Prevent the default '#' jump behavior
+    event.preventDefault();
+
+    // 2. Redirect to your target page
+    window.location.href = 'react.html';
+});
+const button = document.getElementById('viewDataBtn');
+
+button.addEventListener('click', () => {
+    window.location.href = 'data.html';
+});
+
+const initBtn = document.querySelector('.btn-primary.hover-target.btn-glow');
+
+// Add the click event listener
+initBtn.addEventListener('click', function() {
+    window.location.href = 'initialize.html';
+});                
+</script>
+</html>
