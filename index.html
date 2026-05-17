@@ -276,6 +276,187 @@
         transform:translateY(0);
     }
 }
+/* ================= FLOATING AI BUTTON ================= */
+
+.ai-button{
+    position:fixed;
+
+    bottom:30px;
+    right:30px;
+
+    width:70px;
+    height:70px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(
+        135deg,
+        #00ff88,
+        #00c3ff
+    );
+
+    color:#000;
+
+    font-size:28px;
+
+    box-shadow:
+        0 0 20px rgba(0,255,136,.4),
+        0 0 60px rgba(0,255,136,.2);
+
+    z-index:9999;
+
+    cursor:pointer;
+
+    transition:.35s ease;
+}
+
+.ai-button:hover{
+    transform:scale(1.1) rotate(8deg);
+
+    box-shadow:
+        0 0 30px rgba(0,255,136,.6),
+        0 0 80px rgba(0,255,136,.3);
+}
+
+/* ================= MINI JARVIS POPUP ================= */
+
+.jarvis-popup{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.72);
+
+    backdrop-filter:blur(10px);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    z-index:99999;
+}
+
+.jarvis-popup.active{
+    display:flex;
+}
+
+/* ================= WINDOW ================= */
+
+.jarvis-window{
+    position:relative;
+
+    width:95%;
+    max-width:420px;
+
+    height:82vh;
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    background:#0a0a0c;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 0 40px rgba(0,255,136,.18),
+        0 0 100px rgba(0,255,136,.08);
+
+    animation:jarvisOpen .35s ease;
+
+    display:flex;
+    flex-direction:column;
+}
+@keyframes jarvisOpen{
+
+    from{
+        opacity:0;
+        transform:scale(.8);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+/* ================= IFRAME ================= */
+
+.jarvis-frame{
+    width:100%;
+    height:100%;
+
+    border:none;
+
+    overflow:hidden;
+
+    background:#000;
+}
+
+/* ================= CLOSE BUTTON ================= */
+
+#close-jarvis{
+    position:absolute;
+
+    top:14px;
+    right:14px;
+
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(0,255,136,.15);
+
+    backdrop-filter:blur(10px);
+
+    color:#00ff88;
+
+    font-size:18px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    z-index:1000;
+
+    transition:.3s;
+}
+
+#close-jarvis:hover{
+    transform:rotate(90deg) scale(1.08);
+
+    background:#00ff88;
+    color:#000;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px){
+
+    .jarvis-window{
+        width:100%;
+        height:100vh;
+
+        max-width:none;
+
+        border-radius:0;
+    }
+
+    .ai-button{
+        width:60px;
+        height:60px;
+
+        font-size:24px;
+
+        bottom:20px;
+        right:20px;
+    }
+}
 :root{
     --bg-base:#0a0a0c;
     --bg-surface:#121418;
@@ -1446,6 +1627,28 @@ footer{
 </div>
 <div class="ai-tooltip" id="ai-tooltip">
     I am Jarvis, EcoPulse's Personal AI
+</div>
+-- ================= MINI JARVIS POPUP ================= --
+
+<div class="jarvis-popup" id="jarvis-popup">
+
+    <div class="jarvis-window">
+
+        <div class="jarvis-topbar">
+
+            <button id="close-jarvis">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <iframe
+            src="jarvis.html"
+            class="jarvis-frame">
+        </iframe>
+
+    </div>
+
 </div>
 <!-- AI CHAT -->
 
@@ -2792,26 +2995,34 @@ document.getElementById("close-stats-popup")
 const aiButton=
 document.getElementById("ai-button");
 
-const aiChat=
-document.getElementById("ai-chat");
+const jarvisPopup=
+document.getElementById("jarvis-popup");
 
-const closeAI=
-document.getElementById("close-ai");
+const closeJarvis=
+document.getElementById("close-jarvis");
 
-const sendAI=
-document.getElementById("send-ai");
+/* OPEN */
 
-const aiInput=
-document.getElementById("ai-input");
+aiButton.addEventListener("click",()=>{
 
-const aiMessages=
-document.getElementById("ai-messages");
+    jarvisPopup.classList.add("active");
 
+});
+
+/* CLOSE */
+
+closeJarvis.addEventListener("click",()=>{
+
+    jarvisPopup.classList.remove("active");
+
+});
 /* OPEN CHAT */
 
 aiButton.addEventListener("click",()=>{
 
-    window.location.href="jarvis.html";
+    document
+    .getElementById("jarvis-popup")
+    .classList.add("active");
 
 });
 
