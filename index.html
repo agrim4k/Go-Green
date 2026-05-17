@@ -58,7 +58,6 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    cursor:none;
 }
 
 html{
@@ -208,33 +207,12 @@ span{
 }
 
 .nav-links a{
-    color: var(--text-primary);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
-    transition: 0.3s ease;
-    z-index: 200;
-}
-.nav-links a::after{
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 0%;
-    height: 2px;
-    background: var(--accent-primary);
-    transition: 0.3s ease;
-}
-
-.nav-links a:hover::after{
-    width: 100%;
-}
-
-.nav-links a:hover{
-    color: var(--accent-primary);
+    color:var(--text-primary);
+    text-decoration:none;
+    font-weight:500;
+    font-size:.9rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
 }
 
 .nav-actions{
@@ -453,6 +431,231 @@ span{
     font-size:.95rem;
     margin-bottom:2rem;
 }
+/* ================= POPUP ================= */
+
+.protocol-popup{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.7);
+
+    backdrop-filter:blur(10px);
+
+    display:none;
+    justify-content:center;
+    align-items:center;
+
+    padding:2rem;
+
+    z-index:9999;
+}
+
+.protocol-popup.active{
+    display:flex;
+}
+.protocol-popup{
+    display:none;
+}
+.popup-card{
+    position:relative;
+}
+
+.popup-card{
+    position:relative;
+
+    width:90%;
+    max-width:900px;
+
+    max-height:85vh;
+
+    overflow-y:auto;
+
+    padding:40px;
+
+    border-radius:25px;
+
+    background:var(--bg-surface);
+
+    border:1px solid var(--border-color);
+
+    box-shadow:0 0 40px rgba(0,0,0,.5);
+}
+
+@keyframes popupShow{
+
+    from{
+        opacity:0;
+        transform:translateY(30px) scale(.95);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+#close-popup{
+    position:absolute;
+    top:15px;
+    right:15px;
+
+    width:45px;
+    height:45px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#00ff88;
+    color:#000;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:1.4rem;
+    font-weight:bold;
+
+    z-index:999999;
+
+    cursor:pointer;
+
+    box-shadow:0 0 20px rgba(0,255,136,.5);
+
+    transition:.3s ease;
+}
+
+#close-popup:hover{
+    transform:scale(1.1) rotate(90deg);
+}
+.popup-header{
+    text-align:center;
+    margin-bottom:3rem;
+}
+
+.popup-header h2{
+    font-size:3rem;
+    margin-bottom:1rem;
+}
+
+.popup-header p{
+    color:var(--text-secondary);
+    line-height:1.7;
+}
+
+.mode-switcher{
+    display:flex;
+    justify-content:center;
+    gap:1rem;
+    margin-bottom:2rem;
+    flex-wrap:wrap;
+}
+
+.mode-btn{
+    background:var(--bg-base);
+
+    border:1px solid var(--border-color);
+
+    color:var(--text-primary);
+
+    padding:.8rem 1.5rem;
+
+    border-radius:12px;
+
+    transition:.3s;
+}
+
+.mode-btn.active{
+    background:var(--accent-primary);
+    color:#000;
+}
+
+.graph-container{
+    position:relative;
+
+    height:320px;
+
+    background:var(--glass-bg);
+
+    border:1px solid var(--border-color);
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin-bottom:3rem;
+}
+
+.graph-grid{
+    position:absolute;
+    inset:0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.04) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.04) 1px,
+            transparent 1px
+        );
+
+    background-size:50px 50px;
+}
+
+.graph-svg{
+    width:100%;
+    height:100%;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:2rem;
+
+    margin-bottom:2rem;
+}
+
+.info-box{
+    background:var(--bg-base);
+
+    border:1px solid var(--border-color);
+
+    border-radius:20px;
+
+    padding:2rem;
+
+    text-align:center;
+}
+
+.info-box h3{
+    color:var(--accent-primary);
+    font-size:2rem;
+    margin-bottom:10px;
+}
+
+.info-box p{
+    color:var(--text-secondary);
+}
+
+.protocol-info{
+    background:var(--glass-bg);
+
+    border:1px solid var(--border-color);
+
+    border-radius:20px;
+
+    padding:2rem;
+}
+
+.protocol-info h3{
+    margin-bottom:1rem;
+}
+
+.protocol-info p{
+    color:var(--text-secondary);
+    line-height:1.8;
+}
 
 .card-progress{
     height:4px;
@@ -465,6 +668,41 @@ span{
     height:100%;
     background:var(--accent-primary);
     border-radius:2px;
+}
+#close-popup{
+    position:absolute;
+    top:20px;
+    right:20px;
+
+    width:55px;
+    height:55px;
+
+    background:white;
+    color:black;
+
+    border:3px solid #00ff88;
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:28px;
+    font-weight:900;
+
+    z-index:999999999;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 0 20px rgba(0,255,136,.7),
+        0 0 40px rgba(0,255,136,.3);
+
+    transition:.3s ease;
+}
+
+#close-popup:hover{
+    transform:scale(1.12) rotate(90deg);
 }
 
 /* ================= CALCULATOR ================= */
@@ -902,6 +1140,102 @@ footer{
             <div class="card-progress">
                 <div class="progress-fill" style="width:89%"></div>
             </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- =========================
+PUT THIS RIGHT BELOW
+THE CORE PROTOCOLS SECTION
+========================= -->
+
+<section id="protocol-popup" class="protocol-popup">
+
+    <div class="popup-card">
+
+         <button id="close-popup">✕</button>
+
+        <div class="popup-header">
+
+            <h2 id="popup-title">
+                Energy Grid <span>Override</span>
+            </h2>
+
+            <p id="popup-description">
+                Smart renewable energy distribution system.
+            </p>
+
+        </div>
+
+        <div class="mode-switcher">
+
+            <button class="mode-btn active" data-mode="1">
+                1Y
+            </button>
+
+            <button class="mode-btn" data-mode="5">
+                5Y
+            </button>
+
+            <button class="mode-btn" data-mode="10">
+                10Y
+            </button>
+
+            <button class="mode-btn" data-mode="max">
+                MAX
+            </button>
+
+        </div>
+
+        <div class="graph-container">
+
+            <div class="graph-grid"></div>
+
+            <svg class="graph-svg" viewBox="0 0 800 300">
+
+                <polyline
+                    id="graph-line"
+                    fill="none"
+                    stroke="var(--accent-primary)"
+                    stroke-width="5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                ></polyline>
+
+            </svg>
+
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="info-box">
+                <h3 id="popup-stat1">84%</h3>
+                <p>Efficiency</p>
+            </div>
+
+            <div class="info-box">
+                <h3 id="popup-stat2">2.3M</h3>
+                <p>People Impacted</p>
+            </div>
+
+            <div class="info-box">
+                <h3 id="popup-stat3">-45%</h3>
+                <p>Carbon Reduction</p>
+            </div>
+
+        </div>
+
+        <div class="protocol-info">
+
+            <h3>
+                System Overview
+            </h3>
+
+            <p id="popup-info">
+                Detailed information appears here.
+            </p>
 
         </div>
 
@@ -1447,6 +1781,180 @@ document.getElementById('initiateProjectBtn')
 .addEventListener('click',()=>{
 
     window.location.href='initialize.html';
+
+});
+/* ================= PROTOCOL POPUP ================= */
+
+const protocolData = {
+
+    energy:{
+        title:"Energy Grid <span>Override</span>",
+        description:"AI-powered renewable energy ecosystem controlling smart solar grids.",
+        info:"Energy Grid Override distributes renewable electricity across connected cities using predictive AI balancing systems. The protocol analyzes demand spikes, weather conditions, and battery reserves to optimize energy efficiency in real time.",
+        stats:["84%","2.3M","-45%"],
+        graphs:{
+            1:[30,60,90,120,150,180,220],
+            5:[40,80,130,210,300,420,550],
+            10:[60,120,220,340,500,690,850],
+            max:[80,170,320,520,760,980,1200]
+        }
+    },
+
+    water:{
+        title:"Hydration <span>Matrices</span>",
+        description:"Autonomous purification drones restoring oceans and freshwater systems.",
+        info:"Hydration Matrices deploy underwater AI drones that scan water chemistry, identify toxic contamination, and remove microplastics from marine ecosystems. Real-time monitoring improves biodiversity recovery rates worldwide.",
+        stats:["63%","980K","-31%"],
+        graphs:{
+            1:[20,40,65,90,130,170,210],
+            5:[35,70,120,180,260,350,470],
+            10:[50,110,180,300,450,620,800],
+            max:[80,160,290,480,700,980,1300]
+        }
+    },
+
+    forest:{
+        title:"Predictive <span>Forestry</span>",
+        description:"Machine-learning climate systems restoring forests and biodiversity.",
+        info:"Predictive Forestry uses satellite imaging and climate simulations to determine the best vegetation placement strategy for long-term ecosystem survival. Drone-assisted planting accelerates global reforestation efforts.",
+        stats:["91%","1.4M","+72%"],
+        graphs:{
+            1:[40,70,110,150,200,250,320],
+            5:[60,120,200,320,470,650,860],
+            10:[90,180,320,500,760,1040,1380],
+            max:[130,280,520,820,1200,1680,2200]
+        }
+    }
+};
+
+const popup =
+    document.getElementById("protocol-popup");
+
+const graphLine =
+    document.getElementById("graph-line");
+
+let currentProtocol = "energy";
+let currentMode = "1";
+
+function drawGraph(data){
+
+    const width = 800;
+    const height = 300;
+
+    const max = Math.max(...data);
+
+    const stepX = width / (data.length - 1);
+
+    let points = "";
+
+    data.forEach((value,index)=>{
+
+        const x = index * stepX;
+
+        const y =
+            height -
+            ((value/max) * 240) -
+            20;
+
+        points += `${x},${y} `;
+    });
+
+    graphLine.setAttribute(
+        "points",
+        points
+    );
+}
+
+function openProtocol(protocol){
+
+    currentProtocol = protocol;
+
+    const data =
+        protocolData[protocol];
+
+    document.getElementById("popup-title")
+    .innerHTML = data.title;
+
+    document.getElementById("popup-description")
+    .innerText = data.description;
+
+    document.getElementById("popup-info")
+    .innerText = data.info;
+
+    document.getElementById("popup-stat1")
+    .innerText = data.stats[0];
+
+    document.getElementById("popup-stat2")
+    .innerText = data.stats[1];
+
+    document.getElementById("popup-stat3")
+    .innerText = data.stats[2];
+
+    drawGraph(data.graphs[currentMode]);
+
+    popup.classList.add("active");
+}
+
+document.getElementById("close-popup")
+.addEventListener("click",()=>{
+
+    popup.classList.remove("active");
+
+});
+
+document.querySelectorAll(".mode-btn")
+.forEach(btn=>{
+
+    btn.addEventListener("click",()=>{
+
+        document.querySelectorAll(".mode-btn")
+        .forEach(b=>b.classList.remove("active"));
+
+        btn.classList.add("active");
+
+        currentMode =
+            btn.dataset.mode;
+
+        drawGraph(
+            protocolData[currentProtocol]
+            .graphs[currentMode]
+        );
+    });
+
+});
+
+/* FEATURE CARD CLICKS */
+
+const cards =
+    document.querySelectorAll(".feature-card");
+
+cards[0].addEventListener(
+    "click",
+    ()=>openProtocol("energy")
+);
+
+cards[1].addEventListener(
+    "click",
+    ()=>openProtocol("water")
+);
+
+cards[2].addEventListener(
+    "click",
+    ()=>openProtocol("forest")
+);
+
+/* INITIAL GRAPH */
+
+drawGraph(
+    protocolData.energy.graphs[1]
+);
+document
+.getElementById("close-popup")
+.addEventListener("click",()=>{
+
+    document
+    .getElementById("protocol-popup")
+    .classList.remove("active");
 
 });
 </script>
