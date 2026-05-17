@@ -805,6 +805,122 @@ span{
     margin-top:10px;
 }
 
+
+/* ================= FOCUS POPUP ================= */
+
+.focus-popup{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.7);
+    backdrop-filter:blur(10px);
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    z-index:9999;
+}
+
+.focus-popup.active{
+    display:flex;
+}
+
+.focus-popup-card{
+    position:relative;
+
+    width:90%;
+    max-width:850px;
+
+    background:var(--bg-surface);
+
+    border:1px solid var(--border-color);
+
+    border-radius:25px;
+
+    padding:40px;
+
+    overflow:hidden;
+
+    animation:popupShow .4s ease;
+}
+
+@keyframes popupShow{
+    from{
+        opacity:0;
+        transform:scale(.9);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+#close-focus-popup{
+    position:absolute;
+    top:15px;
+    right:15px;
+
+    width:40px;
+    height:40px;
+
+    border:none;
+    border-radius:50%;
+
+    background:var(--accent-primary);
+    color:#000;
+
+    font-size:20px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.focus-top h2{
+    font-size:2.5rem;
+    margin-bottom:20px;
+}
+
+.focus-top p{
+    color:var(--text-secondary);
+    line-height:1.8;
+    font-size:1.05rem;
+}
+
+.focus-stats{
+    margin-top:40px;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+
+    gap:20px;
+}
+
+.focus-stat-box{
+    background:rgba(255,255,255,.03);
+
+    border:1px solid var(--border-color);
+
+    padding:25px;
+
+    border-radius:20px;
+
+    text-align:center;
+}
+
+.focus-stat-box h3{
+    font-size:2rem;
+    color:var(--accent-primary);
+
+    margin-bottom:10px;
+}
+
+.focus-stat-box p{
+    color:var(--text-secondary);
+}
 /* ================= STATS ================= */
 
 #stats{
@@ -1360,6 +1476,42 @@ THE CORE PROTOCOLS SECTION
     </div>
 
 </section>
+<div class="focus-popup" id="focus-popup">
+
+    <div class="focus-popup-card">
+
+        <button id="close-focus-popup">✕</button>
+
+        <div class="focus-top">
+
+            <h2 id="focus-title"></h2>
+
+            <p id="focus-description"></p>
+
+        </div>
+
+        <div class="focus-stats">
+
+            <div class="focus-stat-box">
+                <h3 id="focus-stat1"></h3>
+                <p id="focus-label1"></p>
+            </div>
+
+            <div class="focus-stat-box">
+                <h3 id="focus-stat2"></h3>
+                <p id="focus-label2"></p>
+            </div>
+
+            <div class="focus-stat-box">
+                <h3 id="focus-stat3"></h3>
+                <p id="focus-label3"></p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 <section id="stats">
 
@@ -1954,6 +2106,130 @@ document
 
     document
     .getElementById("protocol-popup")
+    .classList.remove("active");
+
+});
+/* ================= FOCUS CARD DATA ================= */
+
+const focusData={
+
+    "Clean Air":{
+        description:
+            "Clean air initiatives reduce toxic emissions, improve lung health, and lower climate-changing greenhouse gases across major cities.",
+
+        stats:[
+            {
+                value:"72%",
+                label:"Pollution Reduced"
+            },
+
+            {
+                value:"1.4M",
+                label:"Lives Improved"
+            },
+
+            {
+                value:"320",
+                label:"Cities Monitoring"
+            }
+        ]
+    },
+
+    "Pure Water":{
+        description:
+            "Advanced filtration systems and cleanup missions provide safe drinking water and remove dangerous contaminants from oceans and rivers.",
+
+        stats:[
+            {
+                value:"98K",
+                label:"Liters Saved"
+            },
+
+            {
+                value:"45%",
+                label:"Cleaner Oceans"
+            },
+
+            {
+                value:"120",
+                label:"River Projects"
+            }
+        ]
+    },
+
+    "Wildlife":{
+        description:
+            "Wildlife protection programs restore ecosystems, prevent extinction, and rebuild habitats for endangered species worldwide.",
+
+        stats:[
+            {
+                value:"15K",
+                label:"Animals Protected"
+            },
+
+            {
+                value:"210",
+                label:"Nature Zones"
+            },
+
+            {
+                value:"89%",
+                label:"Habitat Recovery"
+            }
+        ]
+    }
+
+};
+
+/* ================= OPEN FOCUS POPUP ================= */
+
+document.querySelectorAll("#Focus .card")
+.forEach(card=>{
+
+    card.addEventListener("click",()=>{
+
+        const title=
+            card.querySelector("h3").innerText;
+
+        const data=focusData[title];
+
+        document.getElementById("focus-title")
+        .innerText=title;
+
+        document.getElementById("focus-description")
+        .innerText=data.description;
+
+        document.getElementById("focus-stat1")
+        .innerText=data.stats[0].value;
+
+        document.getElementById("focus-label1")
+        .innerText=data.stats[0].label;
+
+        document.getElementById("focus-stat2")
+        .innerText=data.stats[1].value;
+
+        document.getElementById("focus-label2")
+        .innerText=data.stats[1].label;
+
+        document.getElementById("focus-stat3")
+        .innerText=data.stats[2].value;
+
+        document.getElementById("focus-label3")
+        .innerText=data.stats[2].label;
+
+        document.getElementById("focus-popup")
+        .classList.add("active");
+
+    });
+
+});
+
+/* ================= CLOSE POPUP ================= */
+
+document.getElementById("close-focus-popup")
+.addEventListener("click",()=>{
+
+    document.getElementById("focus-popup")
     .classList.remove("active");
 
 });
