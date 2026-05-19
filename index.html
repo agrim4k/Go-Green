@@ -1781,6 +1781,82 @@ footer{
     font-size:.9rem;
 }
 
+/* ================= MUSIC ADDITIONS ================= */
+
+.music-button{
+    position:fixed;
+    left:50%;
+    bottom:30px;
+    transform:translateX(-50%);
+    z-index:10001;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 18px;
+    border:none;
+    border-radius:999px;
+    cursor:pointer;
+    background:var(--bg-surface);
+    color:var(--text-primary);
+    border:1px solid var(--border-color);
+}
+
+.music-button svg{
+    width:20px;
+    height:20px;
+    display:block;
+}
+
+.music-panel{
+    position:fixed;
+    left:50%;
+    bottom:95px;
+    transform:translateX(-50%);
+    z-index:10001;
+    display:none;
+    width:min(92vw,360px);
+    padding:14px;
+    background:var(--bg-surface);
+    border:1px solid var(--border-color);
+    border-radius:14px;
+}
+
+.music-panel.active{
+    display:block;
+}
+
+.music-panel-controls{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+}
+
+.music-panel-controls button{
+    border:1px solid var(--border-color);
+    background:rgba(255,255,255,.05);
+    color:var(--text-primary);
+    padding:10px 12px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+#music-input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid var(--border-color);
+    background:rgba(255,255,255,.05);
+    color:var(--text-primary);
+    outline:none;
+}
+
+#music-status{
+    margin-top:10px;
+    font-size:.9rem;
+    color:var(--text-secondary);
+    line-height:1.5;
+}
+
 /* ================= RESPONSIVE ================= */
 
 @media(max-width:968px){
@@ -1808,8 +1884,20 @@ footer{
         align-items:center;
     }
 }
+
+@media(max-width:600px){
+
+    .music-button{
+        bottom:20px;
+    }
+
+    .music-panel{
+        bottom:85px;
+    }
+}
 </style>
 </head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <!-- AI BUTTON -->
 
 <div class="ai-button" id="ai-button">
@@ -1900,6 +1988,27 @@ footer{
 
 <div class="weather-button" id="weather-button">
     <i class="fa-solid fa-cloud-sun"></i>
+</div>
+
+<!-- MUSIC BUTTON -->
+
+<button class="music-button" id="music-button" type="button" aria-label="Open music controls">
+    <i class='fab fa-spotify' style="font-size: 24px;"></i>
+</button>
+
+<div class="music-panel" id="music-panel">
+    <input
+        type="text"
+        id="music-input"
+        placeholder="Play a song or type like phonk, rap, chill"
+    >
+    <div class="music-panel-controls">
+        <button id="music-play-btn" type="button">Play</button>
+        <button id="music-pause-btn" type="button">Pause</button>
+        <button id="music-stop-btn" type="button">Stop</button>
+    </div>
+    <div id="music-status">Ready for voice commands like “play attention” or “play phonk music”.</div>
+    <audio id="jarvis-music-player" preload="none"></audio>
 </div>
 
 <!-- WEATHER POPUP -->
@@ -3261,6 +3370,12 @@ aiButton.addEventListener("click",()=>{
 
     }
 
+    if(window.MusicJarvis){
+
+        window.MusicJarvis.prime();
+
+    }
+
 });
 
 /* CLOSE */
@@ -3299,7 +3414,7 @@ document.getElementById("ai-messages");
 const sendAI =
 document.getElementById("send-ai");
 /* SEND MESSAGE */
-function sendMessage(){
+async function sendMessage(){
 
     const text=aiInput.value.trim();
 
@@ -3328,7 +3443,11 @@ function sendMessage(){
     let response=
     "EcoPulse AI is analyzing your sustainability question.";
 
-    if(text.toLowerCase().includes("carbon")){
+    if(window.MusicJarvis && window.MusicJarvis.looksLikeMusicRequest(text)){
+
+        response = await window.MusicJarvis.handleTextCommand(text);
+
+    }else if(text.toLowerCase().includes("carbon")){
 
         response=
         "Reducing transport emissions and using renewable energy are two of the fastest ways to lower carbon output.";
@@ -3427,6 +3546,427 @@ if(sendAI){
 
 }
 
+/* ================= MUSIC SYSTEM ================= */
+
+const MusicJarvis = {
+
+    audio:document.getElementById("jarvis-music-player"),
+    button:document.getElementById("music-button"),
+    panel:document.getElementById("music-panel"),
+    input:document.getElementById("music-input"),
+    playBtn:document.getElementById("music-play-btn"),
+    pauseBtn:document.getElementById("music-pause-btn"),
+    stopBtn:document.getElementById("music-stop-btn"),
+    status:document.getElementById("music-status"),
+    lastTrack:null,
+    requestId:0,
+    primed:false,
+
+    library:{
+        "acelerada":"acelerada song",
+        "alor on danse":"alors on danse stromae",
+        "astronaut in the ocean":"astronaut in the ocean masked wolf",
+        "attention":"attention charlie puth",
+        "city of roses":"city of roses song",
+        "gata only":"gata only floyymenor cris mj",
+        "gata only x kompa":"gata only x kompa song",
+        "got me singing":"got me singing song",
+        "kingpin":"kingpin song",
+        "lose my mind":"lose my mind song",
+        "matrix":"matrix song",
+        "montagem rugada":"montagem rugada song",
+        "montagem xonada":"montagem xonada song",
+        "she wolf":"she wolf shakira",
+        "taco bell super slowed":"taco bell super slowed song"
+    },
+
+    genres:{
+        "phonk":"phonk music",
+        "rap":"rap music",
+        "drill":"drill music",
+        "pop":"pop music",
+        "chill":"chill music",
+        "lofi":"lofi music",
+        "kompa":"kompa music",
+        "slowed":"slowed music",
+        "dance":"dance music",
+        "sad":"sad music"
+    },
+
+    init(){
+
+        if(this.button){
+            this.button.addEventListener("click",()=>{
+                this.prime();
+                this.panel.classList.toggle("active");
+            });
+        }
+
+        if(this.playBtn){
+            this.playBtn.addEventListener("click",()=>{
+                const query = this.input.value.trim() || "phonk music";
+                this.playFromQuery(query);
+            });
+        }
+
+        if(this.pauseBtn){
+            this.pauseBtn.addEventListener("click",()=>{
+                this.pause();
+            });
+        }
+
+        if(this.stopBtn){
+            this.stopBtn.addEventListener("click",()=>{
+                this.stop();
+            });
+        }
+
+        if(this.input){
+            this.input.addEventListener("keydown",(event)=>{
+                if(event.key === "Enter"){
+                    this.playFromQuery(this.input.value.trim());
+                }
+            });
+        }
+
+        if(this.audio){
+            this.audio.addEventListener("ended",()=>{
+                this.setStatus("Preview ended. Say another song or press Play again.");
+            });
+
+            this.audio.addEventListener("play",()=>{
+                if(this.lastTrack){
+                    this.setStatus(`Playing ${this.lastTrack.trackName} - ${this.lastTrack.artistName}`);
+                }
+            });
+
+            this.audio.addEventListener("pause",()=>{
+                if(this.audio.currentTime > 0 && !this.audio.ended){
+                    this.setStatus("Music paused.");
+                }
+            });
+        }
+
+        document.addEventListener("click",()=>{
+            this.prime();
+        },{once:true});
+
+        const helpBox = document.getElementById("jarvis-help");
+
+        if(helpBox){
+            [
+                "“play astronaut in the ocean”",
+                "“play attention”",
+                "“play phonk music”",
+                "“pause music”",
+                "“resume music”",
+                "“stop music”"
+            ].forEach(text=>{
+                const command = document.createElement("p");
+                command.innerText = text;
+                helpBox.appendChild(command);
+            });
+        }
+    },
+
+    prime(){
+
+        if(this.primed || !this.audio){
+            return;
+        }
+
+        this.audio.volume = 0.9;
+
+        const silent =
+            "data:audio/mp3;base64,SUQzAwAAAAAAF1RTU0UAAAAPAAADTGF2ZjU2LjI0LjEwNAAAAAAAAAAAAAAA//uQZAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAFAAAGhgAICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgP/7kGQAA";
+
+        this.audio.src = silent;
+
+        this.audio.play()
+        .then(()=>{
+            this.audio.pause();
+            this.audio.removeAttribute("src");
+            this.audio.load();
+            this.primed = true;
+            this.setStatus("Music system ready.");
+        })
+        .catch(()=>{
+            this.setStatus("Tap Music once, then use voice commands to play songs.");
+        });
+    },
+
+    normalize(text){
+        return text
+            .toLowerCase()
+            .replace(/[^\w\s]/g," ")
+            .replace(/\s+/g," ")
+            .trim();
+    },
+
+    extractSongQuery(text){
+
+        const normalized = this.normalize(text);
+
+        if(this.library[normalized]){
+            return this.library[normalized];
+        }
+
+        const playMatch = normalized.match(/(?:play|start|put on)\s+(.+)/);
+
+        if(playMatch && playMatch[1]){
+            const direct = playMatch[1].trim();
+
+            if(this.library[direct]){
+                return this.library[direct];
+            }
+
+            const genre = direct
+                .replace(/\bmusic\b/g,"")
+                .trim();
+
+            if(this.genres[genre]){
+                return this.genres[genre];
+            }
+
+            return direct;
+        }
+
+        if(this.genres[normalized]){
+            return this.genres[normalized];
+        }
+
+        return normalized;
+    },
+
+    looksLikeMusicRequest(text){
+
+        const normalized = this.normalize(text);
+
+        return (
+            normalized.startsWith("play ") ||
+            normalized.startsWith("start ") ||
+            normalized.startsWith("put on ") ||
+            normalized === "pause music" ||
+            normalized === "resume music" ||
+            normalized === "continue music" ||
+            normalized === "stop music" ||
+            normalized === "mute music" ||
+            normalized === "unmute music" ||
+            normalized in this.library ||
+            normalized in this.genres
+        );
+    },
+
+    setStatus(message){
+        if(this.status){
+            this.status.innerText = message;
+        }
+    },
+
+    speak(message){
+        if(!("speechSynthesis" in window)){
+            return;
+        }
+
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(message);
+        utterance.rate = 1;
+        utterance.pitch = 1;
+        window.speechSynthesis.speak(utterance);
+    },
+
+    jsonp(url){
+        return new Promise((resolve,reject)=>{
+
+            const callbackName =
+                `jarvisMusicSearch_${Date.now()}_${Math.floor(Math.random()*100000)}`;
+
+            const script =
+                document.createElement("script");
+
+            const cleanup = ()=>{
+                delete window[callbackName];
+                script.remove();
+            };
+
+            window[callbackName] = (data)=>{
+                cleanup();
+                resolve(data);
+            };
+
+            script.onerror = ()=>{
+                cleanup();
+                reject(new Error("Music search failed."));
+            };
+
+            script.src =
+                `${url}${url.includes("?") ? "&" : "?"}callback=${callbackName}`;
+
+            document.body.appendChild(script);
+        });
+    },
+
+    pickBestResult(query,results){
+
+        const normalizedQuery = this.normalize(query);
+
+        const scored = results.map(item=>{
+            const title = this.normalize(item.trackName || "");
+            const artist = this.normalize(item.artistName || "");
+            const combo = `${title} ${artist}`;
+
+            let score = 0;
+
+            if(title === normalizedQuery){
+                score += 10;
+            }
+
+            if(combo.includes(normalizedQuery)){
+                score += 6;
+            }
+
+            normalizedQuery.split(" ").forEach(word=>{
+                if(title.includes(word)){
+                    score += 2;
+                }
+                if(artist.includes(word)){
+                    score += 1;
+                }
+            });
+
+            return {
+                item,
+                score
+            };
+        });
+
+        scored.sort((a,b)=>b.score-a.score);
+
+        return scored[0]?.item || results[0] || null;
+    },
+
+    async searchTrack(query){
+
+        const url =
+            `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&country=US&limit=10`;
+
+        const data = await this.jsonp(url);
+
+        if(!data || !Array.isArray(data.results) || data.results.length === 0){
+            return null;
+        }
+
+        return this.pickBestResult(query,data.results);
+    },
+
+    async playFromQuery(query){
+
+        const cleaned = (query || "").trim();
+
+        if(cleaned === ""){
+            this.setStatus("Say or type a song name first.");
+            return "Say or type a song name first.";
+        }
+
+        this.prime();
+
+        const songQuery = this.extractSongQuery(cleaned);
+        const currentRequest = ++this.requestId;
+
+        this.setStatus(`Searching for ${cleaned}...`);
+
+        try{
+
+            const match = await this.searchTrack(songQuery);
+
+            if(currentRequest !== this.requestId){
+                return "Skipping older search.";
+            }
+
+            if(!match || !match.previewUrl){
+                this.setStatus(`No preview found for ${cleaned}. Try a different spelling or another song.`);
+                return `I could not find a playable preview for ${cleaned}.`;
+            }
+
+            this.audio.src = match.previewUrl;
+            await this.audio.play();
+            this.lastTrack = match;
+
+            const message = `Playing ${match.trackName} by ${match.artistName}.`;
+            this.setStatus(message);
+            return message;
+
+        }catch(error){
+
+            this.setStatus("Could not load music right now.");
+            return "I could not load music right now.";
+
+        }
+    },
+
+    pause(){
+        if(this.audio && !this.audio.paused){
+            this.audio.pause();
+        }
+        return "Music paused.";
+    },
+
+    async resume(){
+        if(this.audio && this.audio.src){
+            await this.audio.play();
+            return "Resuming music.";
+        }
+
+        return "There is no music ready to resume yet.";
+    },
+
+    stop(){
+        if(this.audio){
+            this.audio.pause();
+            this.audio.currentTime = 0;
+        }
+
+        this.setStatus("Music stopped.");
+        return "Music stopped.";
+    },
+
+    async handleTextCommand(text){
+
+        const normalized = this.normalize(text);
+
+        if(normalized === "pause music"){
+            return this.pause();
+        }
+
+        if(normalized === "resume music" || normalized === "continue music"){
+            return this.resume();
+        }
+
+        if(normalized === "stop music"){
+            return this.stop();
+        }
+
+        if(normalized === "mute music"){
+            this.audio.muted = true;
+            this.setStatus("Music muted.");
+            return "Music muted.";
+        }
+
+        if(normalized === "unmute music"){
+            this.audio.muted = false;
+            this.setStatus("Music unmuted.");
+            return "Music unmuted.";
+        }
+
+        return this.playFromQuery(text);
+    }
+
+};
+
+window.MusicJarvis = MusicJarvis;
+MusicJarvis.init();
+
 /* ================= VOICE SYSTEM ================= */
 
 const SpeechRecognition =
@@ -3490,7 +4030,7 @@ if(SpeechRecognition){
 
     /* RESULTS */
 
-    siteRecognition.onresult = (event)=>{
+    siteRecognition.onresult = async (event)=>{
 
         const transcript =
         event.results[
@@ -3501,6 +4041,14 @@ if(SpeechRecognition){
             "VOICE:",
             transcript
         );
+
+        if(window.MusicJarvis && window.MusicJarvis.looksLikeMusicRequest(transcript)){
+
+            const response = await window.MusicJarvis.handleTextCommand(transcript);
+            window.MusicJarvis.speak(response);
+            return;
+
+        }
 
         /* HOME */
 
@@ -3811,6 +4359,10 @@ document.addEventListener("keydown",(e)=>{
 
             weatherPopup.classList.remove("active");
 
+        }
+
+        if(MusicJarvis.panel){
+            MusicJarvis.panel.classList.remove("active");
         }
 
     }
