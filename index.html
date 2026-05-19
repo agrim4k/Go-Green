@@ -22,7 +22,7 @@
 
 .ai-button{
     position:fixed;
-
+    
     bottom:30px;
     right:30px;
 
@@ -456,6 +456,196 @@
         bottom:20px;
         right:20px;
     }
+}
+#jarvis-help{
+
+    position:fixed;
+
+    right:120px;
+
+    bottom:120px;
+
+    width:220px;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:rgba(10,15,25,.92);
+
+    border:1px solid rgba(0,255,150,.3);
+
+    color:white;
+
+    z-index:9999;
+
+    display:none;
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+    0 0 30px rgba(0,255,150,.25);
+
+}
+
+#jarvis-help.active{
+
+    display:block;
+
+}
+
+#jarvis-help h3{
+
+    color:#00ff99;
+
+    margin-bottom:10px;
+
+}
+
+#jarvis-help p{
+
+    margin:8px 0;
+
+    font-size:.95rem;
+
+}
+/* ================= WEATHER BUTTON ================= */
+
+.weather-button{
+
+    position:fixed;
+    left:30px;
+    bottom:30px;
+
+    width:70px;
+    height:70px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #00ff88,
+        #00c3ff
+    );
+
+    color:white;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    z-index:9999;
+
+    box-shadow:
+    0 0 25px rgba(0,255,136,.5);
+
+    transition:.3s;
+}
+
+.weather-button:hover{
+
+    transform:scale(1.1);
+
+    box-shadow:
+    0 0 40px rgba(0,255,136,.8);
+}
+
+/* ================= WEATHER POPUP ================= */
+
+.weather-popup{
+
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.7);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    z-index:10000;
+}
+
+.weather-popup.active{
+
+    display:flex;
+}
+
+.weather-window{
+
+    width:90%;
+    max-width:1000px;
+
+    height:80vh;
+
+    background:#0f172a;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    border:
+    2px solid rgba(255,255,255,.1);
+
+    box-shadow:
+    0 0 50px rgba(0,255,136,.3);
+}
+
+.weather-topbar{
+
+    height:70px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00ff88,
+        #00c3ff
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 25px;
+
+    color:white;
+}
+
+.weather-topbar h3{
+
+    font-size:22px;
+}
+
+#close-weather{
+
+    width:40px;
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    background:white;
+
+    font-size:18px;
+}
+
+.weather-frame{
+
+    width:100%;
+    height:calc(80vh - 70px);
+
+    border:none;
+
+    background:white;
 }
 :root{
     --bg-base:#0a0a0c;
@@ -1628,9 +1818,30 @@ footer{
 <div class="ai-tooltip" id="ai-tooltip">
     I am Jarvis, EcoPulse's Personal AI
 </div>
--- ================= MINI JARVIS POPUP ================= --
-
 <div class="jarvis-popup" id="jarvis-popup">
+    <!-- JARVIS HELP -->
+
+    <div id="jarvis-help">
+
+        <h3>Jarvis Commands</h3>
+
+        <p>“show stats”</p>
+
+        <p>“open energy”</p>
+
+        <p>“open water”</p>
+
+        <p>“open forest”</p>
+
+        <p>“light mode”</p>
+
+        <p>“dark mode”</p>
+
+        <p>“scroll down”</p>
+
+    </div>
+
+    <!-- JARVIS WINDOW -->
 
     <div class="jarvis-window">
 
@@ -1681,6 +1892,38 @@ footer{
         <button id="send-ai">
             <i class="fa-solid fa-paper-plane"></i>
         </button>
+
+    </div>
+
+</div>
+<!-- WEATHER BUTTON -->
+
+<div class="weather-button" id="weather-button">
+    <i class="fa-solid fa-cloud-sun"></i>
+</div>
+
+<!-- WEATHER POPUP -->
+
+<div class="weather-popup" id="weather-popup">
+
+    <div class="weather-window">
+
+        <div class="weather-topbar">
+
+            <h3>Weather Center</h3>
+
+            <button id="close-weather">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <!-- YOUR WEATHER FILE -->
+
+        <iframe
+            src="waetherPro.html"
+            class="weather-frame">
+        </iframe>
 
     </div>
 
@@ -3007,6 +3250,17 @@ aiButton.addEventListener("click",()=>{
 
     jarvisPopup.classList.add("active");
 
+    /* START VOICE CONTROL */
+    document
+.getElementById("jarvis-help")
+.classList.add("active");
+
+    if(window.startEcoVoiceControl){
+
+        window.startEcoVoiceControl();
+
+    }
+
 });
 
 /* CLOSE */
@@ -3014,6 +3268,17 @@ aiButton.addEventListener("click",()=>{
 closeJarvis.addEventListener("click",()=>{
 
     jarvisPopup.classList.remove("active");
+
+    /* STOP VOICE CONTROL */
+    document
+.getElementById("jarvis-help")
+.classList.remove("active");
+
+    if(window.stopEcoVoiceControl){
+
+        window.stopEcoVoiceControl();
+
+    }
 
 });
 /* OPEN CHAT */
@@ -3025,17 +3290,15 @@ aiButton.addEventListener("click",()=>{
     .classList.add("active");
 
 });
+const aiInput =
+document.getElementById("ai-input");
 
-/* CLOSE CHAT */
+const aiMessages =
+document.getElementById("ai-messages");
 
-closeAI.addEventListener("click",()=>{
-
-    aiChat.classList.remove("active");
-
-});
-
+const sendAI =
+document.getElementById("send-ai");
 /* SEND MESSAGE */
-
 function sendMessage(){
 
     const text=aiInput.value.trim();
@@ -3104,14 +3367,6 @@ function sendMessage(){
     aiMessages.scrollHeight;
 
 }
-
-/* BUTTON SEND */
-
-sendAI.addEventListener(
-    "click",
-    sendMessage
-);
-
 /* ENTER KEY */
 
 aiInput.addEventListener(
@@ -3126,6 +3381,454 @@ aiInput.addEventListener(
 
     }
 );
+
+/* ================= AUTO START VOICE ================= */
+
+window.addEventListener("load",()=>{
+
+    if(window.startEcoVoiceControl){
+
+        setTimeout(()=>{
+
+            window.startEcoVoiceControl();
+
+        },1500);
+
+    }
+
+});
+const micBtn = document.getElementById("micBtn");
+
+if(micBtn){
+
+    micBtn.addEventListener("click", () => {
+
+        if(window.startEcoVoiceControl){
+
+            startEcoVoiceControl();
+
+            console.log("VOICE CONTROL CONNECTED");
+
+        }
+
+    });
+
+}
+
+/* ================= AI CHAT VARIABLES ================= */
+/* ================= SEND BUTTON ================= */
+
+if(sendAI){
+
+    sendAI.addEventListener(
+        "click",
+        sendMessage
+    );
+
+}
+
+/* ================= VOICE SYSTEM ================= */
+
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
+
+if(SpeechRecognition){
+
+    console.log("VOICE SYSTEM READY");
+
+    const siteRecognition =
+    new SpeechRecognition();
+
+    siteRecognition.lang = "en-US";
+
+    siteRecognition.continuous = true;
+
+    siteRecognition.interimResults = false;
+
+    let voiceActive = false;
+
+    /* START VOICE */
+
+    window.startEcoVoiceControl = function(){
+
+        if(!voiceActive){
+
+            siteRecognition.start();
+
+            voiceActive = true;
+
+            console.log("VOICE STARTED");
+
+        }
+
+    };
+
+    /* STOP VOICE */
+
+    window.stopEcoVoiceControl = function(){
+
+        voiceActive = false;
+
+        siteRecognition.stop();
+
+        console.log("VOICE STOPPED");
+
+    };
+
+    /* AUTO RESTART */
+
+    siteRecognition.onend = ()=>{
+
+        if(voiceActive){
+
+            siteRecognition.start();
+
+        }
+
+    };
+
+    /* RESULTS */
+
+    siteRecognition.onresult = (event)=>{
+
+        const transcript =
+        event.results[
+            event.results.length - 1
+        ][0].transcript.toLowerCase();
+
+        console.log(
+            "VOICE:",
+            transcript
+        );
+
+        /* HOME */
+
+        if(
+            transcript.includes("home")
+        ){
+
+            document
+            .getElementById("home")
+            ?.scrollIntoView({
+                behavior:"smooth"
+            });
+
+        }
+        else if(
+    transcript.includes("show core") ||
+    transcript.includes("open core protocols")
+){
+
+    document
+    .getElementById("mission")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+        /* STATS */
+
+        else if(
+            transcript.includes("show stats")
+        ){
+
+            document
+            .getElementById("stats")
+            ?.scrollIntoView({
+                behavior:"smooth"
+            });
+
+        }
+
+        /* CARBON MODEL */
+
+        else if(
+            transcript.includes("carbon model") ||
+            transcript.includes("calculator")
+        ){
+
+            document
+            .getElementById("calculator")
+            ?.scrollIntoView({
+                behavior:"smooth"
+            });
+
+        }
+
+        /* FOCUS */
+
+        else if(
+            transcript.includes("focus")
+        ){
+
+            document
+            .getElementById("Focus")
+            ?.scrollIntoView({
+                behavior:"smooth"
+            });
+
+        }
+
+        /* OPEN ENERGY */
+
+        else if(
+            transcript.includes("open energy")
+        ){
+
+            openProtocol("energy");
+
+        }
+
+        /* OPEN WATER */
+
+        else if(
+            transcript.includes("open water")
+        ){
+
+            openProtocol("water");
+
+        }
+
+        /* OPEN FOREST */
+
+        else if(
+            transcript.includes("open forest")
+        ){
+
+            openProtocol("forest");
+
+        }
+
+        /* LIGHT MODE */
+
+        else if(
+            transcript.includes("light mode")
+        ){
+
+            document.documentElement
+            .setAttribute(
+                "data-theme",
+                "light"
+            );
+
+        }
+
+        /* DARK MODE */
+
+        else if(
+            transcript.includes("dark mode")
+        ){
+
+            document.documentElement
+            .setAttribute(
+                "data-theme",
+                "dark"
+            );
+
+        }
+
+        /* SCROLL DOWN */
+
+        else if(
+            transcript.includes("scroll down")
+        ){
+
+            window.scrollBy({
+                top:700,
+                behavior:"smooth"
+            });
+
+        }
+
+        /* SCROLL UP */
+
+        else if(
+            transcript.includes("scroll up")
+        ){
+
+            window.scrollBy({
+                top:-700,
+                behavior:"smooth"
+            });
+
+        }
+
+        /* CLOSE POPUPS */
+
+        else if(
+            transcript.includes("close popup") ||
+            transcript.includes("close window")
+        ){
+
+            document
+            .querySelectorAll(
+                ".protocol-popup, .focus-popup, .stats-popup, .jarvis-popup"
+            )
+            .forEach(popup=>{
+
+                popup.classList.remove(
+                    "active"
+                );
+
+            });
+
+        }
+
+    };
+
+    /* ERRORS */
+
+    siteRecognition.onerror = (e)=>{
+
+        console.log(
+            "VOICE ERROR:",
+            e.error
+        );
+
+    };
+
+}
+
+/* ================= AI BUTTON ================= */
+
+if(aiButton){
+
+    aiButton.addEventListener(
+        "click",
+        ()=>{
+
+            jarvisPopup.classList.add(
+                "active"
+            );
+
+            if(
+                window.startEcoVoiceControl
+            ){
+
+                window.startEcoVoiceControl();
+
+            }
+
+        }
+    );
+
+}
+
+/* ================= CLOSE AI ================= */
+
+if(closeJarvis){
+
+    closeJarvis.addEventListener(
+        "click",
+        ()=>{
+
+            jarvisPopup.classList.remove(
+                "active"
+            );
+
+            if(
+                window.stopEcoVoiceControl
+            ){
+
+                window.stopEcoVoiceControl();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ================= WEATHER SYSTEM ================= */
+
+/* BUTTON */
+
+const weatherButton =
+document.getElementById("weather-button");
+
+/* POPUP */
+
+const weatherPopup =
+document.getElementById("weather-popup");
+
+/* CLOSE BUTTON */
+
+const closeWeather =
+document.getElementById("close-weather");
+
+/* WEATHER FRAME */
+
+const weatherFrame =
+document.querySelector(".weather-frame");
+
+/* ================= OPEN WEATHER ================= */
+
+if(weatherButton){
+
+    weatherButton.addEventListener("click",()=>{
+
+        console.log("OPENING WEATHER");
+
+        /* OPEN POPUP */
+
+        if(weatherPopup){
+
+            weatherPopup.classList.add("active");
+
+        }
+
+    });
+
+}
+
+/* ================= CLOSE WEATHER ================= */
+
+if(closeWeather){
+
+    closeWeather.addEventListener("click",()=>{
+
+        console.log("CLOSING WEATHER");
+
+        if(weatherPopup){
+
+            weatherPopup.classList.remove("active");
+
+        }
+
+    });
+
+}
+
+/* ================= ESC KEY CLOSE ================= */
+
+document.addEventListener("keydown",(e)=>{
+
+    if(e.key === "Escape"){
+
+        if(weatherPopup){
+
+            weatherPopup.classList.remove("active");
+
+        }
+
+    }
+
+});
+
+/* ================= CLICK OUTSIDE CLOSE ================= */
+
+window.addEventListener("click",(e)=>{
+
+    if(e.target === weatherPopup){
+
+        weatherPopup.classList.remove("active");
+
+    }
+
+});
+
 </script>
 
 </body>

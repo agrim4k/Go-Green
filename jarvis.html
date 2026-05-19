@@ -149,6 +149,92 @@
     </div>
 
     <script type="module" src="./app.js"></script>
+    <script>
+
+/* ================= MIC BUTTON ================= */
+
+const micBtn =
+document.getElementById("micBtn");
+
+let voiceActive = false;
+
+micBtn.addEventListener("click", async ()=>{
+
+    try{
+
+        /* ASK FOR MIC PERMISSION */
+
+        await navigator.mediaDevices.getUserMedia({
+            audio:true
+        });
+
+        /* START */
+
+        if(!voiceActive){
+
+            if(parent.startEcoVoiceControl){
+
+                parent.startEcoVoiceControl();
+
+                voiceActive = true;
+
+                micBtn.innerText =
+                "Listening...";
+
+                micBtn.style.background =
+                "#00ff88";
+
+                micBtn.style.color =
+                "#000";
+
+                console.log(
+                    "Voice Started"
+                );
+
+            }
+
+        }
+
+        /* STOP */
+
+        else{
+
+            if(parent.stopEcoVoiceControl){
+
+                parent.stopEcoVoiceControl();
+
+                voiceActive = false;
+
+                micBtn.innerText =
+                "Speak";
+
+                micBtn.style.background =
+                "";
+
+                micBtn.style.color =
+                "";
+
+                console.log(
+                    "Voice Stopped"
+                );
+
+            }
+
+        }
+
+    }catch(err){
+
+        console.log(err);
+
+        alert(
+            "Microphone permission denied."
+        );
+
+    }
+
+});
+
+</script>
   </body>
   <link rel="stylesheet"href="style.css">
 </html>
