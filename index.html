@@ -3890,7 +3890,30 @@ const MusicJarvis = {
             }
 
             this.audio.src = match.previewUrl;
-            await this.audio.play();
+
+localStorage.setItem(
+    "jarvis_music_src",
+    match.previewUrl
+);
+
+localStorage.setItem(
+    "jarvis_music_time",
+    "0"
+);
+
+await this.audio.play();
+
+/* SAVE CURRENT TIME */
+
+this.audio.addEventListener("timeupdate",()=>{
+
+    localStorage.setItem(
+        "jarvis_music_time",
+        this.audio.currentTime
+    );
+
+});
+    
             this.lastTrack = match;
 
             const message = `Playing ${match.trackName} by ${match.artistName}.`;
@@ -4376,6 +4399,27 @@ window.addEventListener("click",(e)=>{
     if(e.target === weatherPopup){
 
         weatherPopup.classList.remove("active");
+
+    }
+
+});
+
+</script>
+<script>
+
+window.addEventListener("beforeunload",()=>{
+
+    const audio =
+        document.getElementById(
+            "jarvis-music-player"
+        );
+
+    if(audio){
+
+        localStorage.setItem(
+            "jarvis_music_time",
+            audio.currentTime
+        );
 
     }
 

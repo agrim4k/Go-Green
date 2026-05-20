@@ -279,7 +279,7 @@
         <div class="jarvis-ai">
             <a href="#Jarvis" class="btn-Jarvis">Ask Jarvis</a>
         </div>
-
+       
     </nav>
 
     <!-- SEARCH -->
@@ -1025,6 +1025,71 @@ deployBtn.addEventListener('click', function(event) {
     window.location.href = 'jarvis.html';
 });
     </script>
+<audio id="jarvis-music-player"></audio>
 
+<script>
+
+window.addEventListener("DOMContentLoaded",async()=>{
+
+    const audio =
+        document.getElementById(
+            "jarvis-music-player"
+        );
+
+    const savedSrc =
+        localStorage.getItem(
+            "jarvis_music_src"
+        );
+
+    const savedTime =
+        localStorage.getItem(
+            "jarvis_music_time"
+        );
+
+    if(savedSrc){
+
+        audio.src = savedSrc;
+
+        audio.currentTime =
+            parseFloat(savedTime || 0);
+
+        try{
+
+            await audio.play();
+
+        }catch(err){
+
+            console.log(
+                "Autoplay blocked"
+            );
+
+        }
+
+    }
+
+});
+
+</script>
+<script>
+
+window.addEventListener("beforeunload",()=>{
+
+    const audio =
+        document.getElementById(
+            "jarvis-music-player"
+        );
+
+    if(audio){
+
+        localStorage.setItem(
+            "jarvis_music_time",
+            audio.currentTime
+        );
+
+    }
+
+});
+
+</script>
 </body>
 </html>

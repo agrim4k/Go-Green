@@ -163,6 +163,52 @@
     </div>
 
     <script src="./app.js"></script>
+    <audio id="jarvis-music-player"></audio>
+
+<script>
+
+window.addEventListener("DOMContentLoaded",async()=>{
+
+    const audio =
+        document.getElementById(
+            "jarvis-music-player"
+        );
+
+    const savedSrc =
+        localStorage.getItem(
+            "jarvis_music_src"
+        );
+
+    const savedTime =
+        localStorage.getItem(
+            "jarvis_music_time"
+        );
+
+    if(savedSrc){
+
+        audio.src = savedSrc;
+
+        audio.currentTime =
+            parseFloat(savedTime || 0);
+
+        try{
+
+            await audio.play();
+
+        }catch(err){
+
+            console.log(
+                "Autoplay blocked"
+            );
+
+        }
+
+    }
+
+});
+
+</script>
+
   </body>
   <style>
     :root {
@@ -1250,4 +1296,25 @@ function init() {
 
 init();
   </script>
+  <script>
+
+window.addEventListener("beforeunload",()=>{
+
+    const audio =
+        document.getElementById(
+            "jarvis-music-player"
+        );
+
+    if(audio){
+
+        localStorage.setItem(
+            "jarvis_music_time",
+            audio.currentTime
+        );
+
+    }
+
+});
+
+</script>
 </html>
